@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metal QC Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Metal Assembly Visual QC</h1>
+            <p class="subtitle">Upload reference and inspection photos to detect physical differences.</p>
+        </header>
+
+        <main>
+            <div id="error-banner" class="hidden"></div>
+            
+            <div class="upload-section">
+                <div class="dropzone" id="dropzone-a">
+                    <span class="label">Reference Image (A)</span>
+                    <p class="placeholder">Drag & Drop or Click to Select</p>
+                    <input type="file" id="input-a" accept="image/*" hidden>
+                    <img id="preview-a" class="hidden" alt="Preview A">
+                </div>
+
+                <div class="dropzone" id="dropzone-b">
+                    <span class="label">Inspection Image (B)</span>
+                    <p class="placeholder">Drag & Drop or Click to Select</p>
+                    <input type="file" id="input-b" accept="image/*" hidden>
+                    <img id="preview-b" class="hidden" alt="Preview B">
+                </div>
+            </div>
+
+            <div class="controls-section">
+                <div class="slider-container">
+                    <label for="sensitivity-slider">Detection Sensitivity: <span id="sensitivity-value">5</span></label>
+                    <input type="range" id="sensitivity-slider" min="1" max="10" value="5">
+                    <div class="slider-labels">
+                        <span>Low (Fewer False Positives)</span>
+                        <span>High (Catches Smallest Defects)</span>
+                    </div>
+                </div>
+                
+                <button id="compare-btn" disabled>Compare Images</button>
+            </div>
+
+            <div id="loading" class="hidden">
+                <div class="spinner"></div>
+                <p>Aligning & Detecting Differences...</p>
+            </div>
+
+            <div id="results-section" class="hidden">
+                <div class="results-header">
+                    <h2>Comparison Result</h2>
+                    <div id="confidence-banner" class="hidden">ALIGNMENT CONFIDENCE: LOW - OVERLAY SUPPRESSED</div>
+                </div>
+
+                <div class="results-grid">
+                    <div class="main-composite">
+                        <img id="result-composite" alt="Comparison Composite">
+                    </div>
+
+                    <div class="summary-panel">
+                        <h3>Analysis Summary</h3>
+                        
+                        <div class="stat-group">
+                            <span class="stat-label">Total Detected</span>
+                            <span class="stat-value" id="stat-total">0</span>
+                        </div>
+                        
+                        <div class="stat-group">
+                            <span class="stat-label">Flagged Area</span>
+                            <span class="stat-value" id="stat-area">0.00%</span>
+                        </div>
+                        
+                        <div class="stat-group">
+                            <span class="stat-label">Breakdown</span>
+                            <div class="breakdown-list" id="stat-breakdown">
+                                <!-- Breakdown items populated by JS -->
+                            </div>
+                        </div>
+
+                        <div class="diff-view">
+                            <h4>Isolated Difference View</h4>
+                            <img id="result-heatmap" alt="Difference Heatmap">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{
+  "_comment": "Visual QC Tool -- All tunable thresholds. Edit here, not in code.",
+  "alignment": {
+    "_comment_orb_features": "Max ORB keypoints. More = slower but more robust on complex textures.",
+    "orb_n_features": 5000,
+    "_comment_match_ratio": "Lowe ratio test. Lower = stricter matching.",
+    "lowe_ratio": 0.75,
+    "_comment_min_matches": "Fallback to phase-correlation if fewer good matches than this.",
+    "min_good_matches": 10,
+    "_comment_ransac": "RANSAC reprojection threshold in pixels.",
+    "ransac_threshold": 5.0,
+    "_comment_roi": "ROI masking to prevent cluttered backgrounds (person, cables, shop equipment) from dominating ORB keypoint detection. Center-crop keeps central x_frac x y_frac of the frame.",
+    "use_roi_mask": true,
+    "roi_center_x_frac": 0.75,
+    "roi_center_y_frac": 0.85,
+    "_comment_brightness_mask": "Optional: restrict keypoints to bright (reflective metal) regions. Set true for bright stainless steel on dark backgrounds. Leave false for dark assemblies (painted steel, black brackets).",
+    "use_brightness_mask": false,
+    "brightness_mask_percentile": 60
+  },
+  "difference": {
+    "_comment_ssim_win": "SSIM sliding window size (must be odd).",
+    "ssim_win_size": 11,
+    "_comment_ssim_cutoff": "SSIM similarity below this is flagged. Lower = more sensitive.",
+    "ssim_diff_cutoff": 0.92,
+    "_comment_canny": "Canny edge thresholds [low, high].",
+    "canny_low": 15,
+    "canny_high": 50,
+    "_comment_morph": "Morphological kernel size. Larger = more noise removed.",
+    "morph_kernel_size": 7,
+    "morph_open_iterations": 1,
+    "morph_close_iterations": 2,
+    "_comment_min_area": "Min contour area (px^2) to flag. Primary FP control. 4000 ~= 63x63 px.",
+    "min_contour_area": 4000,
+    "ssim_weight": 0.2,
+    "edge_weight": 0.8,
+    "_comment_blur": "Gaussian blur kernel size applied before diffing to suppress parallax/misalignment edges. Set to 0 to disable.",
+    "blur_kernel_size": 15
+  },
+  "visualization": {
+    "overlay_alpha": 0.4,
+    "box_color": [
+      0,
+      0,
+      255
+    ],
+    "box_thickness": 2,
+    "font_scale": 0.55,
+    "max_display_width": 1400
+  }
+}
